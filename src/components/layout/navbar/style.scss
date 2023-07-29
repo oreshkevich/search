@@ -1,0 +1,31 @@
+.header {
+  background: #393c3c;
+  padding-bottom: 25px;
+  padding-top: 25px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.header__nav {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  align-items: center;
+  color: #fff;
+}
+
+.header__btn {
+  height: 2rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  min-height: 2rem;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+.header__link {
+  margin-left: 5px;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: #fff;
+}

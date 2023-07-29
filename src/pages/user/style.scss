@@ -1,0 +1,54 @@
+.description {
+  margin-top: 20px;
+}
+
+.description__wrap {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition-duration: 200ms;
+  height: 2.25rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  width: -moz-fit-content;
+  width: fit-content;
+  padding-left: 0.563rem;
+  padding-right: 0.563rem;
+  border-width: 1px;
+  background-color: #37a16f;
+  border-radius: 10px;
+  font-size: 24px;
+}
+.description__title h4 {
+  margin-bottom: 10px;
+}
+.description__title h2 {
+  margin-bottom: 20px;
+}
+
+.description__btn {
+  margin-bottom: 20px;
+}
+
+@media (max-width: 1200px) {
+  .description__wrap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 600px) {
+  .description__wrap {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  .description__title h4 {
+    font-size: 26px;
+  }
+  .description__title h2 {
+    font-size: 26px;
+  }
+}
