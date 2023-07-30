@@ -4,6 +4,7 @@ import GithubContext from '../../../context/github/GithubContext';
 import {searchUsers} from '../../../context/github/GithubActions';
 import ratingClose from '../../../assets/svg/rating.svg';
 import ratingOpen from '../../../assets/svg/rating-open.svg';
+import {QUANTITY_USER} from '../../../core/constants';
 
 function UserSearch() {
   const [textSearch, setTextSearch] = useState('');
@@ -11,8 +12,9 @@ function UserSearch() {
   const {users, text, page, dispatch} = useContext(GithubContext);
   const [ratingState, setRatingState] = useState(true);
 
-  const handleChange = (e) => setTextSearch(e.target.value);
-
+  const handleChange = (e) => {
+    setTextSearch(e.target.value);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,17 +31,15 @@ function UserSearch() {
     }
   };
   const handleRating = async () => {
-    const quantityUser = 10;
-
     if (ratingState) {
       const repositories = 'repositories';
       dispatch({type: 'SET_LOADING'});
-      const users = await searchUsers(text, page, quantityUser, repositories);
+      const users = await searchUsers(text, page, QUANTITY_USER, repositories);
       dispatch({type: 'GET_USERS', payload: users});
     } else {
       dispatch({type: 'SET_LOADING'});
       const repositories = 'start';
-      const users = await searchUsers(text, page, quantityUser, repositories);
+      const users = await searchUsers(text, page, QUANTITY_USER, repositories);
       dispatch({type: 'GET_USERS', payload: users});
     }
   };
@@ -52,17 +52,22 @@ function UserSearch() {
   return (
     <div>
       <div className='user'>
-        <form className='form' onSubmit={handleSubmit}>
+        <form className='form' onSubmit={handleSubmit} data-testid='toggle-btn'>
           <p className='error'>{error}</p>
           <div className='form__control'>
             <input
+              data-testid='input-search'
               type='text'
               className='form__input'
               placeholder='Search'
               value={textSearch}
-              onChange={handleChange}
+              onChange={(e) => handleChange(e)}
             />
-            <button type='submit' className='form__btn btn'>
+            <button
+              data-testid='button-go'
+              type='submit'
+              className='form__btn btn'
+            >
               Go
             </button>
           </div>

@@ -4,7 +4,7 @@ import './style.scss';
 
 function UserItem({user: {login, avatar_url}}) {
   return (
-    <div className='card'>
+    <div data-testid='card-id' className='card'>
       <Link className='card__link' to={`/user/${login}`}>
         <div className='card__wrap'>
           <div className='card__item'>
@@ -28,4 +28,3 @@ UserItem.propTypes = {
 };
 
 export default UserItem;
-

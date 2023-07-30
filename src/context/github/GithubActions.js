@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {QUANTITY_USER} from '../../core/constants';
 
 const GITHUB_URL = 'https://api.github.com';
 
@@ -9,7 +10,7 @@ const github = axios.create({
 export const searchUsers = async (
   text = 'oresh',
   currentPage = 1,
-  quantityUser = 10,
+  quantityUser = QUANTITY_USER,
   repositories = 'start'
 ) => {
   if (text === '') {

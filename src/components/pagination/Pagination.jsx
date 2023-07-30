@@ -2,7 +2,9 @@ import React, {useState, useContext, useEffect} from 'react';
 import {createPages} from '../../utils';
 import GithubContext from '../../context/github/GithubContext';
 import {searchUsers} from '../../context/github/GithubActions';
+
 import './style.scss';
+import {QUANTITY_USER} from '../../core/constants';
 
 function Pagination() {
   const pages = [];
@@ -11,7 +13,6 @@ function Pagination() {
   const [pageNow, setPageNow] = useState(1);
 
   const perPage = 10;
-  const quantityUser = 10;
   const pagesCount = Math.ceil(totalCount / perPage);
 
   createPages(pages, pagesCount, pageNow);
@@ -19,7 +20,7 @@ function Pagination() {
   const onClickHandler = async (number) => {
     setPageNow(number);
     dispatch({type: 'SET_LOADING'});
-    const user = await searchUsers(text, number, quantityUser);
+    const user = await searchUsers(text, number, QUANTITY_USER);
     dispatch({type: 'SET_PAGE', payload: number});
     dispatch({type: 'GET_USERS', payload: user});
   };
