@@ -6,25 +6,25 @@ import ratingClose from '../../../assets/svg/rating.svg';
 import ratingOpen from '../../../assets/svg/rating-open.svg';
 
 function UserSearch() {
-  const [text, setText] = useState('');
+  const [textSearch, setTextSearch] = useState('');
   const [error, setError] = useState('');
-  const {users, page, dispatch} = useContext(GithubContext);
+  const {users, text, page, dispatch} = useContext(GithubContext);
   const [ratingState, setRatingState] = useState(true);
 
-  const handleChange = (e) => setText(e.target.value);
+  const handleChange = (e) => setTextSearch(e.target.value);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (text === '') {
+    if (textSearch === '') {
       setError('Please enter something');
     } else {
       dispatch({type: 'SET_LOADING'});
-      const users = await searchUsers(text);
-      dispatch({type: 'SET_TEXT', payload: text});
+      const users = await searchUsers(textSearch);
+      dispatch({type: 'SET_TEXT', payload: textSearch});
       dispatch({type: 'SET_PAGE', payload: 1});
       dispatch({type: 'GET_USERS', payload: users});
-      setText('');
+      setTextSearch('');
       setError('');
     }
   };
@@ -59,7 +59,7 @@ function UserSearch() {
               type='text'
               className='form__input'
               placeholder='Search'
-              value={text}
+              value={textSearch}
               onChange={handleChange}
             />
             <button type='submit' className='form__btn btn'>

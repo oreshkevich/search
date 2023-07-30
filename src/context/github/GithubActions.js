@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 const GITHUB_URL = 'https://api.github.com';
 
 const github = axios.create({
@@ -35,4 +36,3 @@ export const getUserAndRepos = async (login) => {
     return error.message;
   }
 };
-
