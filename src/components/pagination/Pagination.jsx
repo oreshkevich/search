@@ -6,7 +6,7 @@ import './style.scss';
 
 function Pagination() {
   const pages = [];
-  const {text, users, totalCount, dispatch} = useContext(GithubContext);
+  const {text, users, page, totalCount, dispatch} = useContext(GithubContext);
 
   const [pageNow, setPageNow] = useState(1);
 
@@ -27,7 +27,10 @@ function Pagination() {
     if (users.length === 0) {
       setPageNow(1);
     }
-  }, [users]);
+    if (page) {
+      setPageNow(page);
+    }
+  }, [users, page]);
 
   return (
     <div>
@@ -49,4 +52,3 @@ function Pagination() {
 }
 
 export default Pagination;
-

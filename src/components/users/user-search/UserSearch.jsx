@@ -22,6 +22,7 @@ function UserSearch() {
       dispatch({type: 'SET_LOADING'});
       const users = await searchUsers(text);
       dispatch({type: 'SET_TEXT', payload: text});
+      dispatch({type: 'SET_PAGE', payload: 1});
       dispatch({type: 'GET_USERS', payload: users});
       setText('');
       setError('');
@@ -100,4 +101,3 @@ function UserSearch() {
 }
 
 export default UserSearch;
-
