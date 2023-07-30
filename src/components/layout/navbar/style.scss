@@ -29,3 +29,9 @@
   line-height: 1.75rem;
   color: #fff;
 }
+
+@media (max-width: 500px) {
+  .header__btn {
+    font-size: 1rem;
+  }
+}
