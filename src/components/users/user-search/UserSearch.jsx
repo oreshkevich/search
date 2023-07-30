@@ -2,11 +2,14 @@ import {useState, useContext} from 'react';
 import './style.scss';
 import GithubContext from '../../../context/github/GithubContext';
 import {searchUsers} from '../../../context/github/GithubActions';
+import ratingClose from '../../../assets/svg/rating.svg';
+import ratingOpen from '../../../assets/svg/rating-open.svg';
 
 function UserSearch() {
   const [text, setText] = useState('');
   const [error, setError] = useState('');
-  const {users, dispatch} = useContext(GithubContext);
+  const {users, page, dispatch} = useContext(GithubContext);
+  const [ratingState, setRatingState] = useState(true);
 
   const handleChange = (e) => setText(e.target.value);
 
@@ -25,6 +28,27 @@ function UserSearch() {
       setError('');
     }
   };
+  const handleRating = async () => {
+    const quantityUser = 10;
+
+    if (ratingState) {
+      const repositories = 'repositories';
+      dispatch({type: 'SET_LOADING'});
+      const users = await searchUsers(text, page, quantityUser, repositories);
+      dispatch({type: 'GET_USERS', payload: users});
+    } else {
+      dispatch({type: 'SET_LOADING'});
+      const repositories = 'start';
+      const users = await searchUsers(text, page, quantityUser, repositories);
+      dispatch({type: 'GET_USERS', payload: users});
+    }
+  };
+
+  const handleToggleRating = () => {
+    setRatingState((prevValue) => !prevValue);
+    handleRating();
+  };
+
   return (
     <div className='user'>
       <form className='form' onSubmit={handleSubmit}>
@@ -42,15 +66,31 @@ function UserSearch() {
           </button>
         </div>
       </form>
+
       {users.length > 0 && (
-        <div>
+        <>
           <button
-            onClick={() => dispatch({type: 'CLEAR_USERS'})}
-            className='btn clear-btn'
+            type='button'
+            onClick={handleToggleRating}
+            className='filter-more__btn'
           >
-            Clear
+            <img
+              src={ratingState ? ratingClose : ratingOpen}
+              alt='icon_action'
+            />
+            <span className='filter-more__title'>
+              By number of repositories
+            </span>
           </button>
-        </div>
+          <div>
+            <button
+              onClick={() => dispatch({type: 'CLEAR_USERS'})}
+              className='btn clear-btn'
+            >
+              Clear
+            </button>
+          </div>
+        </>
       )}
     </div>
   );

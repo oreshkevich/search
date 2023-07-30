@@ -10,14 +10,15 @@ const github = axios.create({
 export const searchUsers = async (
   text = 'oresh',
   currentPage = 1,
-  quantityUser = 10
+  quantityUser = 10,
+  repositories = 'start'
 ) => {
   if (text === '') {
     text = 'oresh';
   }
   try {
     const response = await github.get(
-      `/search/users?q=${text}&sort=stars&per_page=${quantityUser}&page=${currentPage}`
+      `/search/users?q=${text}&sort=${repositories}&per_page=${quantityUser}&page=${currentPage}`
     );
 
     return response.data;

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {createPages} from '../../utils';
 import GithubContext from '../../context/github/GithubContext';
 import {searchUsers} from '../../context/github/GithubActions';
@@ -6,7 +6,7 @@ import './style.scss';
 
 function Pagination() {
   const pages = [];
-  const {text, totalCount, dispatch} = useContext(GithubContext);
+  const {text, users, totalCount, dispatch} = useContext(GithubContext);
 
   const [pageNow, setPageNow] = useState(1);
 
@@ -19,24 +19,32 @@ function Pagination() {
   const onClickHandler = async (number) => {
     setPageNow(number);
     dispatch({type: 'SET_LOADING'});
-    const users = await searchUsers(text, number, quantityUser);
-    dispatch({type: 'SET_TEXT', payload: text});
-    dispatch({type: 'GET_USERS', payload: users});
+    const user = await searchUsers(text, number, quantityUser);
+    dispatch({type: 'SET_PAGE', payload: number});
+    dispatch({type: 'GET_USERS', payload: user});
   };
+
+  useEffect(() => {
+    if (users.length === 0) {
+      setPageNow(1);
+    }
+  }, [users]);
 
   return (
     <div>
-      <div className='pages'>
-        {pages.map((page, index) => (
-          <span
-            key={page}
-            className={pageNow === page ? 'current-page' : 'page'}
-            onClick={() => onClickHandler(page)}
-          >
-            {page}
-          </span>
-        ))}
-      </div>
+      {users.length > 0 && (
+        <div className='pages'>
+          {pages.map((page, index) => (
+            <span
+              key={page}
+              className={pageNow === page ? 'current-page' : 'page'}
+              onClick={() => onClickHandler(page)}
+            >
+              {page}
+            </span>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
