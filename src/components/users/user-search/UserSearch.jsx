@@ -23,7 +23,6 @@ function UserSearch() {
       const users = await searchUsers(text);
       dispatch({type: 'SET_TEXT', payload: text});
       dispatch({type: 'GET_USERS', payload: users});
-
       setText('');
       setError('');
     }
@@ -50,47 +49,51 @@ function UserSearch() {
   };
 
   return (
-    <div className='user'>
-      <form className='form' onSubmit={handleSubmit}>
-        <p className='error'>{error}</p>
-        <div className='form__control'>
-          <input
-            type='text'
-            className='form__input'
-            placeholder='Search'
-            value={text}
-            onChange={handleChange}
-          />
-          <button type='submit' className='form__btn btn'>
-            Go
-          </button>
-        </div>
-      </form>
-
-      {users.length > 0 && (
-        <>
-          <button
-            type='button'
-            onClick={handleToggleRating}
-            className='filter-more__btn'
-          >
-            <img
-              src={ratingState ? ratingClose : ratingOpen}
-              alt='icon_action'
+    <div>
+      <div className='user'>
+        <form className='form' onSubmit={handleSubmit}>
+          <p className='error'>{error}</p>
+          <div className='form__control'>
+            <input
+              type='text'
+              className='form__input'
+              placeholder='Search'
+              value={text}
+              onChange={handleChange}
             />
-            <span className='filter-more__title'>
-              By number of repositories
-            </span>
-          </button>
-          <div>
-            <button
-              onClick={() => dispatch({type: 'CLEAR_USERS'})}
-              className='btn clear-btn'
-            >
-              Clear
+            <button type='submit' className='form__btn btn'>
+              Go
             </button>
           </div>
-        </>
+        </form>
+        {users.length > 0 && (
+          <>
+            <button
+              type='button'
+              onClick={handleToggleRating}
+              className='filter-more__btn'
+            >
+              <img
+                src={ratingState ? ratingClose : ratingOpen}
+                alt='icon_action'
+              />
+              <span className='filter-more__title'>
+                By number of repositories
+              </span>
+            </button>
+            <div>
+              <button
+                onClick={() => dispatch({type: 'CLEAR_USERS'})}
+                className='btn clear-btn'
+              >
+                Clear
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+      {users.length === 0 && (
+        <h2 className='user__error'>Nothing was found on the request</h2>
       )}
     </div>
   );

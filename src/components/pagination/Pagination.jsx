@@ -23,7 +23,6 @@ function Pagination() {
     dispatch({type: 'SET_PAGE', payload: number});
     dispatch({type: 'GET_USERS', payload: user});
   };
-
   useEffect(() => {
     if (users.length === 0) {
       setPageNow(1);
