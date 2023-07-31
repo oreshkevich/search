@@ -9,7 +9,7 @@ function Home() {
   return (
     <>
       {users === undefined ? (
-        <h2 className='error'>Server error reload the page</h2>
+        <h2 className='user__error'>Server error reload the page</h2>
       ) : (
         <>
           <UserSearch />
@@ -22,4 +22,3 @@ function Home() {
 }
 
 export default Home;
-
